@@ -1,0 +1,1 @@
+cat data.json | jinja2 router.template.rsc -o router.rsc
