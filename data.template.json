@@ -12,11 +12,12 @@
     "ipAddress": ""
   }],
   "DNS": {
+    "server": "1.1.1.1",
     "local": [{
       "name": "MySite",
       "address": "192.168.1.10"
     }],
-    "blockedSites": ["facebook","tiktok.com"]
+    "blockedSites": ["facebook.com","tiktok.com"]
   },
   "firewall": {
     "addressLists": {

@@ -3,6 +3,7 @@
 /interface pppoe-client remove [/interface pppoe-client find name="{{ PPPoE.name }}"]
 # Add PPPoE client
 /interface pppoe-client add name="{{ PPPoE.name }}" user="{{ PPPoE.user }}" password="{{ PPPoE.password }}" interface={% if PPPoE.interface and PPPoE.interface != "" %}"PPPoE.interface"{% else %}"ether1"{% endif %} disabled=no add-default-route=yes
+/interface list member set [/interface list member find list="WAN"] interface="{{ PPPoE.name }}"
 
 # ********** SERVICES **********
 {%- for service in disableServices %}
@@ -22,13 +23,10 @@
 /ip dns static remove [/ip dns static find]
 
 # Local entries
-/ip dns static add address=192.168.88.1 name=router.lan comment="Local Entries"
+/ip dns static add address=192.168.88.1 name=router.local comment="Local Entries"
 {%- for site in DNS.local %}
 /ip dns static add address={{ site.address }} name="{{ site.name }}" comment="Local Entries"
 {%- endfor %}
-
-# DNS DoH - CloudFlare
-/ip dns static add address=1.1.1.1 name=one.one.one.one comment="DNS DoH"
 
 # Blocked websites
 {%- for site in DNS.blockedSites %}
@@ -36,11 +34,8 @@
 {%- endfor %}
 
 # ----- DNS DoH CONFIGURATION -----
-# Add DNS certification
-#/certificate import file-name=CertificateFileName
-
 # Configure DNS entry
-/ip dns set use-doh-server=https://one.one.one.one/dns-query verify-doh-cert=yes
+/ip dns set servers={{ DNS.server }}
 
 # Flush cache DNS to reset all
 /ip dns cache flush
@@ -74,7 +69,11 @@
 {%- endfor %}
 
 # ********** WIREGUARD **********
+#/interface wireguard add listen-port=13231 mtu=1420 name=wireguard1
+#/ip address add address=192.168.98.1/24 interface=wireguard1 network=192.168.98.0
+#/ip firewall filter add action=accept chain=input dst-port=13231 protocol=udp
+#/interface wireguard peers add allowed-address=192.168.98.2/32 interface=wireguard1 public-key="<KEY>"
 
-
-# ********** FINALIZE CONFIGURATION **********
-/system check-installation
+#/ip firewall filter
+#add chain=input protocol=udp dst-port=51820 action=accept place-before=0
+#add chain=forward in-interface=wireguard1 action=accept place-before=1
