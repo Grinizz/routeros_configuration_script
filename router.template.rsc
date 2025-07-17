@@ -65,7 +65,7 @@
 
 # ----- FIREWALL RULES -----
 {%- for rule in firewall.NATRules %}
-/ip firewall nat add comment="{{ rule.comment }}" chain=dstnat action=dst-nat to-addresses={{ rule.address }} to-ports={{ rule.port }} protocol=tcp src-address-list="{{ rule.srcAddressList }}" in-interface-list=WAN dst-port={{ rule.port }} log=no
+/ip firewall nat add comment="{{ rule.comment }}" chain=dstnat action=dst-nat to-addresses={{ rule.address }} to-ports={{ rule.port }} protocol=tcp {%- if rule.srcAddressList and rule.srcAddressList != "" %} src-address-list="{{ rule.srcAddressList }}"{% endif %} in-interface-list=WAN dst-port={{ rule.port }} log=no
 {%- endfor %}
 
 # ********** WIREGUARD **********
