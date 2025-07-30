@@ -13,8 +13,8 @@
 # ********** STATIC DEVICES **********
 {%- for device in staticDevices %}
 # {{ device.name }}
-/ip dhcp-server lease set [/ip dhcp-server lease find mac-address="{{ device.macAddress }}"] address={{ device.ipAddress }} comment="{{ device.name }}"
 /ip dhcp-server lease make-static [/ip dhcp-server lease find mac-address="{{ device.macAddress }}"]
+/ip dhcp-server lease set [/ip dhcp-server lease find mac-address="{{ device.macAddress }}"] address={{ device.ipAddress }} comment="{{ device.name }}"
 {%- endfor %}
 
 # ********** DNS **********
