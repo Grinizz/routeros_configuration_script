@@ -23,7 +23,6 @@
 /ip dns static remove [/ip dns static find]
 
 # Local entries
-/ip dns static add address=192.168.88.1 name=router.local comment="Local Entries"
 {%- for site in DNS.local %}
 /ip dns static add address={{ site.address }} name="{{ site.name }}" comment="Local Entries"
 {%- endfor %}
@@ -44,7 +43,7 @@
 # ----- ADDRESS LIST -----
 # Remove all entries
 /ip firewall address-list remove [/ip firewall address-list find list="Cloudflare IPs"]
-/ipv6 firewall address-list remove [/ip firewall address-list find list="Cloudflare IPs"]
+/ipv6 firewall address-list remove [/ipv6 firewall address-list find list="Cloudflare IPs"]
 {%- for rule in firewall.NATRules %}
 /ip firewall nat remove [/ip firewall nat find comment="{{ rule.comment }}"]
 {%- endfor %}
