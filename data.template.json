@@ -1,0 +1,40 @@
+{
+  "PPPoE": {
+    "name": "",
+    "user": "",
+    "password": "",
+    "interface": ""
+  },
+  "disableServices": ["telnet", "ftp", "ssh", "www-ssl", "api", "api-ssl"],
+  "staticDevices": [{
+    "name": "Server",
+    "macAddress": "",
+    "ipAddress": ""
+  }],
+  "DNS": {
+    "server": "1.1.1.1",
+    "local": [{
+      "name": "MySite",
+      "address": "192.168.1.10"
+    }],
+    "blockedSites": ["facebook.com","tiktok.com"]
+  },
+  "firewall": {
+    "addressLists": {
+      "IP": [{
+        "name": "Cloudflare IPs",
+        "addressList": ["173.245.48.0/20"]
+      }],
+      "IPv6": [{
+        "name": "Cloudflare IPs",
+        "addressList": ["2400:cb00::/32"]
+      }]
+    },
+    "NATRules": [{
+      "comment": "Server",
+      "port": "443",
+      "address": "192.168.1.10",
+      "srcAddressList": "Cloudflare IPs"
+    }]
+  }
+}
