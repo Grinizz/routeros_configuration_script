@@ -24,7 +24,7 @@
 
 # Local entries
 {%- for site in DNS.local %}
-/ip dns static add address={{ site.address }} name="{{ site.name }}" comment="Local Entries"
+/ip dns static add address={{ site.address }} {% if site.includeSubdomains and site.includeSubdomains == true %}match-subdomain=yes {% endif -%} name="{{ site.name }}" comment="Local Entries"
 {%- endfor %}
 
 # Blocked websites
