@@ -1,3 +1,25 @@
+#*************************************************#
+#   ______            _            _____ _____    #
+#   | ___ \          | |          |  _  /  ___|   #
+#   | |_/ /___  _   _| |_ ___ _ __| | | \ `--.    #
+#   |    // _ \| | | | __/ _ \ '__| | | |`--. \   #
+#   | |\ \ (_) | |_| | ||  __/ |  \ \_/ /\__/ /   #
+#   \_| \_\___/ \__,_|\__\___|_|   \___/\____/    #
+#                                                 #
+#*************************************************#
+
+{%- if users %}
+
+# ********** Users **********
+# Create users
+{%- for user in users %}
+/user add name="{{ user.name }}" password="{{ user.password }}" groups="{{ user.groups }}"
+{%- endfor %}
+
+# Remove admin
+/user remove name="admin"
+{%- endif %}
+
 # ********** PPPoE **********
 # Remove entry
 /interface pppoe-client remove [/interface pppoe-client find name="{{ PPPoE.name }}"]
