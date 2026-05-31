@@ -13,11 +13,11 @@
 # ********** Users **********
 # Create users
 {%- for user in users %}
-/user add name="{{ user.name }}" password="{{ user.password }}" groups="{{ user.groups }}"
+/user add name="{{ user.name }}" password="{{ user.password }}" group="{{ user.group }}"
 {%- endfor %}
 
 # Remove admin
-/user remove name="admin"
+/user remove admin
 {%- endif %}
 
 # ********** PPPoE **********
