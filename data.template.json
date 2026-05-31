@@ -2,7 +2,7 @@
   "users": [{
     "name": "johndoe",
     "password": "MaxiSecretPassword",
-    "groups": "reader"
+    "group": "full"
   }],
   "PPPoE": {
     "name": "",
